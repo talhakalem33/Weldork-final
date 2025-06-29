@@ -44,6 +44,8 @@ app.use(sitemapRoutes);
 app.use(robotsRoutes);
 app.use(homeRoutes);
 
-app.listen(3000, function() {
-    console.log("port 3000");
+let PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function() {
+    console.log('port ${PORT}');
 });

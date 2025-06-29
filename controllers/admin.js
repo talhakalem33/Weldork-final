@@ -630,7 +630,9 @@ exports.userDetailDeleteGet = async function(req, res) {
     try {
         const id = decodeURIComponent(req.params.id);
 
-        await User.destroy({ where: { id } });
+        if(id != 1){
+            await User.destroy({ where: { id } });
+        }
 
         res.redirect("/admin/user");
     } catch (err) {
