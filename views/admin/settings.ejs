@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Admin</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+
+        <%- include('../../partials/admin/topbar') %>
+
+        <div id="layoutSidenav">
+
+            <%- include('../../partials/admin/sidebar', user) %>
+            
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Settings</h1>
+                        <br>
+                        <div class="card mb-4">
+                            <div class="card-body">
+
+
+                                <form action="/admin/settings?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Brand Name</label>
+                                        <input type="text" class="form-control" id="brandName" name="brandName" placeholder="Enter Brand Name" value="<%= settings.brandName %>">
+                                        <small class="form-text text-muted">Cannot be left blank.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label>Favicon</label>
+                                        <input type="file" class="form-control" id="favicon" name="favicon">
+                                    </div><br> <br>
+
+
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Active</th>
+                                                <th scope="col">Main Page</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Carousel</td>
+                                                <td></td>
+                                                <td><input type="checkbox" class="form-check-input" id="isCarouselOn" name="isCarouselOn" <% if (settings.isCarouselOn) { %>checked<% } %> ></td>
+                                            </tr>
+                                            <tr>
+                                                <td>About</td>
+                                                <td><input type="checkbox" class="form-check-input" id="isAboutOn" name="isAboutOn" <% if (settings.isAboutOn) { %>checked<% } %>></td>
+                                                <td><input type="checkbox" class="form-check-input" id="isAboutMain" name="isAboutMain" <% if (settings.isAboutMain) { %>checked<% } %>></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Appoinment</td>
+                                                <td><input type="checkbox" class="form-check-input" id="isAppoinmentOn" name="isAppoinmentOn" <% if (settings.isAppoinmentOn) { %>checked<% } %>></td>
+                                                <td><input type="checkbox" class="form-check-input" id="isAppoinmentMain" name="isAppoinmentMain" <% if (settings.isAppoinmentMain) { %>checked<% } %>></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Newsletter</td>
+                                                <td><input type="checkbox" class="form-check-input" id="isNewsletterOn" name="isNewsletterOn" <% if (settings.isNewsletterOn) { %>checked<% } %>></td>
+                                                <td><input type="checkbox" class="form-check-input" id="isNewsletterMain" name="isNewsletterMain" <% if (settings.isNewsletterMain) { %>checked<% } %>></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="Email" Name="Email" aria-describedby="emailHelp" placeholder="Enter email" value="<%= settings.Email %>">
+                                        <small class="form-text text-muted">Cannot be left blank.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email App Password</label>
+                                        <input type="text" class="form-control" id="mailAppPassword" Name="mailAppPassword" placeholder="Enter email app password" value="<%= settings.mailAppPassword %>">
+                                        <small class="form-text text-muted">Cannot be left blank.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Phone Number</label>
+                                        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" value="<%= settings.phoneNumber %>" pattern="[0-9]{10,15}" maxlength="15">
+                                        <small class="form-text text-muted">If you leave it blank it will not be displayed.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Location</label>
+                                        <input type="url" class="form-control" id="location" name="location" placeholder="Google Maps Url" value="<%= settings.location %>">
+                                        <small class="form-text text-muted">Must be google maps url.</small>
+                                        <small class="form-text text-muted">If you leave it blank it will not be displayed.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Instagram</label>
+                                        <input type="url" class="form-control" id="instagram" name="instagram" placeholder="Instagram Url" value="<%= settings.instagram %>">
+                                        <small class="form-text text-muted">Must be url.</small>
+                                        <small class="form-text text-muted">If you leave it blank it will not be displayed.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Twitter</label>
+                                        <input type="url" class="form-control" id="twitter" name="twitter" placeholder="Twitter Url" value="<%= settings.twitter %>">
+                                        <small class="form-text text-muted">Must be url.</small>
+                                        <small class="form-text text-muted">If you leave it blank it will not be displayed.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Facebook</label>
+                                        <input type="url" class="form-control" id="facebook" name="facebook" placeholder="Facebook Url" value="<%= settings.facebook %>">
+                                        <small class="form-text text-muted">Must be url.</small>
+                                        <small class="form-text text-muted">If you leave it blank it will not be displayed.</small>
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Youtube</label>
+                                        <input type="url" class="form-control" id="youtube" name="youtube" placeholder="Youtube Url" value="<%= settings.youtube %>">
+                                        <small class="form-text text-muted">Must be url.</small>
+                                        <small class="form-text text-muted">If you leave it blank it will not be displayed.</small>
+                                    </div><br>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
+</html>

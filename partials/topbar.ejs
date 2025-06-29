@@ -1,0 +1,49 @@
+<!-- Topbar Start -->
+<div class="container-fluid bg-primary text-white d-none d-lg-flex wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-3">
+        <div class="d-flex align-items-center">
+            <a href="/">
+                <h2 class="text-white fw-bold m-0"><%= settings.brandName %></h2>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <% if (settings.location && settings.location.trim() !== '') { %>
+                    <a href="<%= settings.location %>" class="text-decoration-none">
+                        <small class="ms-4"><i class="fas fa-map-marker-alt fa-lg" style="color: #ffff;"></i></small>
+                    </a>
+                <% } %>
+
+                <% if (settings.Email && settings.Email.trim() !== '') { %>
+                    <small class="ms-4"><i class="fa fa-envelope me-3"></i><%= settings.Email %></small>
+                <% } %>
+
+                <% if (settings.phoneNumber && settings.phoneNumber.toString().trim() !== '') { %>
+                    <small class="ms-4"><i class="fa fa-phone-alt me-3"></i><%= settings.phoneNumber %></small>
+                <% } %>
+
+                <div class="ms-3 d-flex">
+                    <% if (settings.facebook && settings.facebook.trim() !== '') { %>
+                        <a class="btn btn-sm-square btn-light text-primary ms-2" href="<%= settings.facebook %>">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    <% } %>
+                    <% if (settings.twitter && settings.twitter.trim() !== '') { %>
+                        <a class="btn btn-sm-square btn-light text-primary ms-2" href="<%= settings.twitter %>">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                    <% } %>
+                    <% if (settings.instagram && settings.instagram.trim() !== '') { %>
+                        <a class="btn btn-sm-square btn-light text-primary ms-2" href="<%= settings.instagram %>">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    <% } %>
+                    <% if (settings.youtube && settings.youtube.trim() !== '') { %>
+                        <a class="btn btn-sm-square btn-light text-primary ms-2" href="<%= settings.youtube %>">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->

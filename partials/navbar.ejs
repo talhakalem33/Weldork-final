@@ -1,0 +1,25 @@
+<!-- Navbar Start -->
+    <div class="container-fluid bg-white sticky-top wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
+                <a href="index.html" class="navbar-brand d-lg-none">
+                    <h1 class="fw-bold m-0">WELDORK</h1>
+                </a>
+                <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav">
+                        <a href="/" class="nav-item nav-link">Home</a>
+                        <% if (settings.isAboutOn) { %><a href="about" class="nav-item nav-link">About</a><% } %>
+                        <% if (settings.isServicesOn) { %><a href="services" class="nav-item nav-link">Services</a><% } %>
+                        <% if (settings.isTeamOn) { %><a href="team" class="nav-item nav-link">Our Team</a><% } %>
+                        <% if (settings.isAppoinmentOn) { %><a href="appoinment" class="nav-item nav-link">Appoinment</a><% } %>
+                        <a href="contact" class="nav-item nav-link">Contact</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+<!-- Navbar End -->

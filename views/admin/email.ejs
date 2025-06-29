@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Tables - SB Admin</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+
+        <%- include('../../partials/admin/topbar') %>
+
+        <div id="layoutSidenav">
+
+            <%- include('../../partials/admin/sidebar', user) %>
+            
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Email</h1>
+                        <br>
+                        <div class="card mb-4">
+                            <div class="card-body">
+
+
+                                <form action="/admin/email" method="post">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Subject</label>
+                                        <input type="text" class="form-control" id="subject" Name="subject" placeholder="Subject" >
+                                    </div><br>
+
+                                    <div class="form-group">
+                                        <label>Mail</label> 
+                                        <textarea class="form-control" id="editor" name="mail"></textarea>
+                                    </div><br>
+
+                                    <button type="submit" class="btn btn-primary">Send</button>
+
+                                    <br><br>
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Emails</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% emails.forEach(email => { %>
+                                                <tr>
+                                                    <td><%= email.email %></td>
+                                                    <td><a href="email/delete/<%= email.email %>">Delete</a></td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>                         
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/35.0.1/ckeditor.min.js" integrity="sha512-xl37Mj+pZ/xUR6DjOTjqlnN7Mb60Od4efkgdfwwhlhvb2qrsB6FrcP1adt2AjiCaKe2eKkfZ0welNw5Kin4UsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            ClassicEditor.create( document.querySelector( '#editor' ))
+                .catch( err => {
+                    console.log(err);
+                });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
+</html>
