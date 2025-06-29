@@ -11,6 +11,11 @@ const csurf = require("csurf");
 const methodOverride = require("method-override");
 //require("./startup/production")(app);
 
+
+//features sayfasını ekle
+//db items ekle 
+//Newsletteri sil
+
 const sessionStore = new SequelizeStore({
   db: seq
 });
