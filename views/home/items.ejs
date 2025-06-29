@@ -64,46 +64,23 @@
     <div class="container-fluid pt-6 pb-6">
         <div class="container pt-4">
             <div class="row g-0 feature-row wow fadeIn bg-light" data-wow-delay="0.1s">
-                <div class="col-md-6 col-lg-3 wow fadeIn bg-light" data-wow-delay="0.3s">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/about-1751058535253.jpg" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                <% items.forEach(item => { %>
+                 
+                    <div class="col-md-6 col-lg-3 wow fadeIn bg-light" data-wow-delay="0.3s">
+                        <div class="card" style="width: 18rem;">
+                            <img src="img/<%= item.itemFrontImage %>" class="card-img-top" >
+                            <div class="card-body">
+                                <h5 class="card-title"><%= item.itemTitle %></h5>
+                                <p class="card-text"><%= item.itemPredescription %></p>
+                                <a href="<%= item.id %>" class="btn btn-primary">Detaylar</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn bg-light" data-wow-delay="0.3s">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/about-1751058535253.jpg" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn bg-light" data-wow-delay="0.3s">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/about-1751058535253.jpg" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn bg-light" data-wow-delay="0.3s">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/about-1751058535253.jpg" class="card-img-top" >
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
+
+                <% }) %>
+
+
             </div>
         </div>
     </div>

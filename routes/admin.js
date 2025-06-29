@@ -6,8 +6,21 @@ const csrf = require("../middlewares/csrf");
 const multer = require("multer");
 const path = require("path");
 const upload = multer({
-    dest: path.join(__dirname, "../public/img")
-});
+    dest: path.join("../public/img")
+}); 
+
+router.get("/admin/item/detail/delete/:id", csrf, isAuth, adminController.itemDetailDeleteGet);
+router.post("/admin/item/detail/:id", csrf, isAuth, upload.fields([
+    { name: "frontImage", maxCount: 1 },
+    { name: "Images", maxCount: 25 }
+  ]), adminController.itemDetailPost);
+router.get("/admin/item/detail/:id", csrf, isAuth, adminController.itemDetailGet);
+router.post("/admin/item/create", csrf, upload.fields([
+        { name: "frontImage", maxCount: 1 },
+        { name: "Images", maxCount: 25 } 
+    ]), isAuth, adminController.itemCreatePost);
+router.get("/admin/item/create", csrf, isAuth, adminController.itemCreateGet);
+router.get("/admin/item", csrf, isAuth, adminController.itemGet);
 
 router.get("/admin/user/:id/delete", csrf, isAuth, adminController.userDetailDeleteGet);
 router.post("/admin/user/:id", csrf, isAuth, adminController.userDetailPost);

@@ -7,7 +7,7 @@ const Content = sequelize.define("Content", {
         allowNull: false,
     },
     carouselImage: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     aboutTitle: {
@@ -15,7 +15,7 @@ const Content = sequelize.define("Content", {
         allowNull: true,
     },
     aboutImage: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     aboutDescription: {

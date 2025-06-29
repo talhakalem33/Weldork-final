@@ -1,4 +1,4 @@
-const {Settings, Content, Email, Appoinment} = require("../models/index"); 
+const {Settings, Content, Email, Appoinment, Item} = require("../models/index"); 
 
 exports.aboutGet = async function(req, res) {
  
@@ -118,11 +118,11 @@ exports.itemsGet = async function(req, res) {
  
     try {
         const settings = await Settings.findByPk(1);
-        const content = await Content.findByPk(1);
+        const items = await Item.findAll();
 
         res.render("home/items", {
             settings: settings,
-            content: content
+            items: items
         });
 
     } catch (err) {

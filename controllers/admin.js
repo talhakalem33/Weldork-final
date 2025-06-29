@@ -1,4 +1,4 @@
-const {User, Settings, Content, Email, Appoinment} = require("../models/index");
+const {User, Settings, Content, Email, Appoinment, Item} = require("../models/index");
 const bcrypt = require("bcrypt");
 const sharp = require("sharp");
 const path = require("path");
@@ -633,6 +633,212 @@ exports.userDetailDeleteGet = async function(req, res) {
         await User.destroy({ where: { id } });
 
         res.redirect("/admin/user");
+    } catch (err) {
+        console.log(err);
+        res.redirect("/admin/500");
+    }
+}
+
+exports.itemGet = async function(req, res) {
+ 
+    try {
+
+        const user = await User.findOne({
+            where: { id: req.session.userId },
+        });
+
+        const items = await Item.findAll();
+
+
+        res.render("admin/items", {
+            user: user,
+            items: items
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.itemCreateGet = async function(req, res) {
+ 
+    try {
+
+        const user = await User.findOne({
+            where: { id: req.session.userId },
+        });
+
+
+        res.render("admin/itemCreate", {
+            user: user
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.itemCreatePost = async function (req, res) {
+    try {
+        const user = await User.findOne({
+            where: { id: req.session.userId },
+        });
+
+        const { title, preDescription, description } = req.body;
+
+        let frontImageName = null;
+        if (req.files.frontImage && req.files.frontImage[0]) {
+            const inputPath = req.files.frontImage[0].path;
+            frontImageName = `front-${Date.now()}.jpg`;
+            const outputPath = path.join("public", "img", frontImageName);
+
+            await sharp(inputPath)
+                .resize(800, 800)
+                .toFormat("jpeg")
+                .jpeg({ quality: 80 })
+                .toFile(outputPath);
+
+            fs.unlinkSync(inputPath);
+        }
+
+        let imageNames = [];
+        if (req.files.Images) {
+            for (const file of req.files.Images) {
+                const inputPath = file.path;
+                const fileName = `item-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const outputPath = path.join("public", "img", fileName);
+
+                await sharp(inputPath)
+                    .resize(800, 800)
+                    .toFormat("jpeg")
+                    .jpeg({ quality: 80 })
+                    .toFile(outputPath);
+
+                fs.unlinkSync(inputPath);
+                imageNames.push(fileName);
+            }
+        }
+
+        await Item.create({
+            itemTitle: title,
+            itemPredescription: preDescription,
+            itemDescription: description,
+            itemFrontImage: frontImageName,
+            itemImage: JSON.stringify(imageNames) 
+        });
+
+        res.redirect("/admin/item");
+
+    } catch (err) {
+        console.log(err);
+        res.render("admin/500");
+    }
+}; 
+
+exports.itemDetailGet = async function(req, res) {
+ 
+    try {
+        const user = await User.findOne({
+            where: { id: req.session.userId },
+        });
+
+        const id = decodeURIComponent(req.params.id);
+
+        const item = await Item.findByPk(id);
+
+        res.render("admin/itemDetail", {
+            user: user,
+            item: item
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+exports.itemDetailPost = async function(req, res) {
+    try {
+        const user = await User.findOne({ where: { id: req.session.userId } });
+        const id = decodeURIComponent(req.params.id);
+        const item = await Item.findByPk(id);
+
+        item.itemTitle = req.body.title;
+        item.itemPredescription = req.body.preDescription;
+        item.itemDescription = req.body.description;
+
+        if (req.files.frontImage && req.files.frontImage[0]) {
+            // Yeni frontImage var ise işle
+            const inputPath = req.files.frontImage[0].path;
+            const fileName = `front-${Date.now()}.jpg`;
+            const outputPath = path.join("public", "img", fileName);
+
+            const oldImagePath = item.itemFrontImage ? path.join("public", "img", item.itemFrontImage) : null;
+
+            await sharp(inputPath)
+                .resize(800, 800)
+                .toFormat("jpeg")
+                .jpeg({ quality: 80 })
+                .toFile(outputPath);
+
+            fs.unlinkSync(inputPath);
+
+            if (oldImagePath && fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
+
+            item.itemFrontImage = fileName;
+        } else {
+            // Eğer frontImage upload edilmediyse ama veritabanında null ise hata alırsın
+            // Bu durumda eski değer null ise bunu bırakma, zorunlu alansa hata ver
+            if (!item.itemFrontImage) {
+                return res.status(400).send("Ön resim zorunludur, lütfen yükleyin.");
+            }
+        }
+
+        if (req.files.Images && req.files.Images.length > 0) {
+            const oldImages = JSON.parse(item.itemImage || "[]");
+            for (const oldImg of oldImages) {
+                const oldImgPath = path.join("public", "img", oldImg);
+                if (fs.existsSync(oldImgPath)) fs.unlinkSync(oldImgPath);
+            }
+
+            const newImageNames = [];
+            for (const file of req.files.Images) {
+                const inputPath = file.path;
+                const fileName = `item-${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`;
+                const outputPath = path.join("public", "img", fileName);
+
+                await sharp(inputPath)
+                    .resize(800, 800)
+                    .toFormat("jpeg")
+                    .jpeg({ quality: 80 })
+                    .toFile(outputPath);
+
+                fs.unlinkSync(inputPath);
+                newImageNames.push(fileName);
+            }
+
+            item.itemImage = JSON.stringify(newImageNames);
+        }
+
+        await item.save();
+
+        res.render("admin/itemDetail", { user, item });
+
+    } catch (err) {
+        console.log(err);
+        res.render("admin/500");
+    }
+};
+
+exports.itemDetailDeleteGet = async function(req, res) {
+
+    try {
+        const id = decodeURIComponent(req.params.id);
+
+        await Item.destroy({ where: { id } });
+
+        res.redirect("/admin/item");
     } catch (err) {
         console.log(err);
         res.redirect("/admin/500");
