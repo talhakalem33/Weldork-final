@@ -1,12 +1,14 @@
+require("dotenv").config();
+
 const config = {
     db: {
-        host: "localhost",
-        user: "root",
-        password: "password",
-        database: "weldorkdb",
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE,
     },
     website: {
-        hostname: "http://127.0.0.1:3000"
+        hostname: process.env.HOSTNAME
     }
 };
 
