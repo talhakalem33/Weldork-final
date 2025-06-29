@@ -3,6 +3,7 @@ const router = express.Router();
 const homeController = require("../controllers/home");
 const csrf = require("../middlewares/csrf");
 
+router.get("/items/:id", homeController.itemsDetailGet);
 router.get("/items", homeController.itemsGet);
 router.get("/about", homeController.aboutGet);
 router.post("/appoinment",csrf, homeController.appointmentPost);

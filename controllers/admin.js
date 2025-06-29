@@ -693,7 +693,7 @@ exports.itemCreatePost = async function (req, res) {
             const outputPath = path.join("public", "img", frontImageName);
 
             await sharp(inputPath)
-                .resize(800, 800)
+                .resize(1920 , 1200)
                 .toFormat("jpeg")
                 .jpeg({ quality: 80 })
                 .toFile(outputPath);
@@ -709,7 +709,7 @@ exports.itemCreatePost = async function (req, res) {
                 const outputPath = path.join("public", "img", fileName);
 
                 await sharp(inputPath)
-                    .resize(800, 800)
+                    .resize(1920 , 1200)
                     .toFormat("jpeg")
                     .jpeg({ quality: 80 })
                     .toFile(outputPath);
@@ -775,7 +775,7 @@ exports.itemDetailPost = async function(req, res) {
             const oldImagePath = item.itemFrontImage ? path.join("public", "img", item.itemFrontImage) : null;
 
             await sharp(inputPath)
-                .resize(800, 800)
+                .resize(1920 , 1200)
                 .toFormat("jpeg")
                 .jpeg({ quality: 80 })
                 .toFile(outputPath);
@@ -809,7 +809,7 @@ exports.itemDetailPost = async function(req, res) {
                 const outputPath = path.join("public", "img", fileName);
 
                 await sharp(inputPath)
-                    .resize(800, 800)
+                    .resize(1920 , 1200)
                     .toFormat("jpeg")
                     .jpeg({ quality: 80 })
                     .toFile(outputPath);

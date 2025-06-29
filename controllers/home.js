@@ -129,3 +129,30 @@ exports.itemsGet = async function(req, res) {
         console.log(err);
     }
 }
+
+exports.itemsDetailGet = async function(req, res) {
+    try {
+        const settings = await Settings.findByPk(1);
+        const id = decodeURIComponent(req.params.id);
+        const item = await Item.findByPk(id);
+
+        // itemImage JSON string ise parse et
+        if (item && item.itemImage) {
+            try {
+                item.itemImage = JSON.parse(item.itemImage);
+            } catch (e) {
+                item.itemImage = []; // parse edilemezse boş dizi ata
+            }
+        } else {
+            item.itemImage = [];
+        }
+
+        res.render("home/itemsDetail", {
+            settings: settings,
+            item: item
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}

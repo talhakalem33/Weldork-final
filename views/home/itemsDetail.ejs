@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Items</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="<%= item.itemTitle %>" name="keywords">
+    <meta content="Item page of <%= settings.brandName %>" name="description">
+
+    <!-- Favicon -->
+    <link href="/img/<%= settings.favicon %>" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <%- include('../../partials/topbar', settings) %> 
+    <%- include('../../partials/navbar', settings) %>
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header pt-5 mb-6 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center pt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="bg-white p-5">
+                        <h1 class="display-6 text-uppercase mb-3 animated slideInDown"><%= item.itemTitle %></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <div class="container pt-6 pb-6">
+        <div class="container">
+            <div class="row g-5 justify-content-center">
+                <div class="col-lg-9 wow fadeIn" data-wow-delay="0.1s">
+                    <div id="carouselExampleControls" class="carousel slide mx-auto" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="/img/<%= item.itemFrontImage %>">
+                            </div>
+
+                            <% if (item.itemImage && item.itemImage.length > 0) { %>
+                                <% item.itemImage.forEach(img => { %>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="/img/<%= img %>">
+                                    </div>
+                                <% }) %>
+                            <% } %>    
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div><br><br>
+
+            <div class="row g-5 justify-content-center">
+                <div class="col-lg-9 wow fadeIn" data-wow-delay="0.1s">
+                    <h5 style="color: #353839;"><%- item.itemDescription %></h5><br>
+                    <h4><a href="/contact">Daha fazla bilgi için</a></h4>
+                </div>
+            </div>
+
+        </div>      
+    </div>
+
+
+
+    <%- include('../../partials/footer', settings) %>
+    <%- include('../../partials/copyright') %>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/wow/wow.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/counterup/counterup.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
