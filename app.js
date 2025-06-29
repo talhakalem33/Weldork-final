@@ -11,6 +11,7 @@ var SequelizeStore = require("connect-session-sequelize")(session.Store);
 const seq = require("./data/db");
 const csurf = require("csurf");
 const methodOverride = require("method-override");
+require("dotenv").config();
 //require("./startup/production")(app);
 
 //meta tag keywords
@@ -24,7 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(session({
-    secret: "randomGUI",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: sessionStore
