@@ -14,6 +14,14 @@ const Settings = sequelize.define("setting", {
         type: DataTypes.TINYINT,
         allowNull: false,
     },
+    isItemsOn: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+    },
+    isItemsMain: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+    },
     isAppoinmentOn: {
         type: DataTypes.TINYINT,
         allowNull: false,

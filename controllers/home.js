@@ -113,3 +113,19 @@ exports.homeIndexPost = async function(req, res) {
         console.log(err);
     }
 }
+
+exports.itemsGet = async function(req, res) {
+ 
+    try {
+        const settings = await Settings.findByPk(1);
+        const content = await Content.findByPk(1);
+
+        res.render("home/items", {
+            settings: settings,
+            content: content
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}

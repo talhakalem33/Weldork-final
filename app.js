@@ -15,6 +15,7 @@ const methodOverride = require("method-override");
 
 
 //features sayfasını ekle
+//meta tag
 //db items ekle
 
 const sessionStore = new SequelizeStore({

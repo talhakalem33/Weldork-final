@@ -87,6 +87,7 @@
     <!-- About End -->
     <% } %>
 
+    <% if (settings.isItemsOn && settings.isItemsMain) { %>
     <!-- Items Start -->
     <div class="container-fluid pt-6 pb-6">
         <div class="container pt-4">
@@ -134,7 +135,7 @@
             </div>
         </div>
     </div>
-    <!-- Items End -->
+    <!-- Items End --><% } %>
 
     <% if (settings.isAppoinmentOn && settings.isAppoinmentMain) { %>
     <!-- Appoinment Start -->

@@ -344,11 +344,13 @@ exports.settingsPut = async function(req, res) {
 
         settings.isCarouselOn = !!req.body.isCarouselOn;
         settings.isAboutOn = !!req.body.isAboutOn;
+        settings.isItemsOn = !!req.body.isItemsOn;
         settings.isFeaturesOn = !!req.body.isFeaturesOn;
         settings.isAppoinmentOn = !!req.body.isAppoinmentOn;
         settings.isTeamOn = !!req.body.isTeamOn;
         settings.isNewsletterOn = !!req.body.isNewsletterOn;
         settings.isAboutMain = !!req.body.isAboutMain;
+        settings.isItemsMain = !!req.body.isItemsMain;
         settings.isFeaturesMain = !!req.body.isFeaturesMain;
         settings.isAppoinmentMain = !!req.body.isAppoinmentMain;
         settings.isTeamMain = !!req.body.isTeamMain;
@@ -361,7 +363,7 @@ exports.settingsPut = async function(req, res) {
         settings.facebook  = req.body.facebook && req.body.facebook.trim() !== '' ? req.body.facebook.trim() : null;
         settings.youtube  = req.body.youtube && req.body.youtube.trim() !== '' ? req.body.youtube.trim() : null;
         settings.brandName = req.body.brandName;
-        settings.mailAppPassword = req.body.mailAppPassword;
+        settings.mailAppPassword = req.body.mailAppPassword;   
 
         if (req.files && req.files.favicon) {
             const inputPath = req.files.favicon[0].path;
