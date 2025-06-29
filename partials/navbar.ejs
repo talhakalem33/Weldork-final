@@ -12,9 +12,9 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav">
                         <a href="/" class="nav-item nav-link">Home</a>
-                        <% if (settings.isAboutOn && settings.isAboutMain) { %><a href="/about" class="nav-item nav-link">About</a><% } %>
-                        <% if (settings.isItemsOn && settings.isItemsMain) { %><a href="/items" class="nav-item nav-link">Items</a><% } %>
-                        <% if (settings.isAppoinmentOn && settings.isAppoinmentMain) { %><a href="/appoinment" class="nav-item nav-link">Appoinment</a><% } %>
+                        <% if (settings.isAboutOn) { %><a href="/about" class="nav-item nav-link">About</a><% } %>
+                        <% if (settings.isItemsOn) { %><a href="/items" class="nav-item nav-link">Items</a><% } %>
+                        <% if (settings.isAppoinmentOn) { %><a href="/appoinment" class="nav-item nav-link">Appoinment</a><% } %>
                         <a href="/contact" class="nav-item nav-link">Contact</a>
                     </div>
                 </div>
