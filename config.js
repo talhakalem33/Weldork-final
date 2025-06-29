@@ -3,7 +3,10 @@ const config = {
         host: "localhost",
         user: "root",
         password: "password",
-        database: "weldorkdb"
+        database: "weldorkdb",
+    },
+    website: {
+        hostname: "http://127.0.0.1:3000"
     }
 };
 
