@@ -29,6 +29,8 @@
                         <div class="card mb-4">
                             <div class="card-body">
 
+                                <!-- Bootstrap Alert Error Display -->
+                                <div id="formErrors"></div>
 
                                 <form action="/admin/user" method="post">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -73,5 +75,46 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+        <!-- Validation Script -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+                form.addEventListener("submit", function (e) {
+                    const errors = [];
+
+                    const name = document.getElementById("name")?.value.trim();
+                    const password = document.getElementById("password")?.value.trim();
+
+                    if (!name) {
+                        errors.push("Name is required.");
+                    } else if (name.length > 255) {
+                        errors.push("Name must be less than or equal to 255 characters.");
+                    }
+
+                    if (!password) {
+                        errors.push("Password is required.");
+                    } else if (password.length < 4) {
+                        errors.push("Password must be at least 4 characters.");
+                    }
+
+                    const errorContainer = document.getElementById("formErrors");
+                    errorContainer.innerHTML = "";
+
+                    if (errors.length > 0) {
+                        e.preventDefault();
+                        errorContainer.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Please fix the following errors:</strong>
+                                <ul>${errors.map(err => `<li>${err}</li>`).join("")}</ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+        </script>
+
     </body>
 </html>

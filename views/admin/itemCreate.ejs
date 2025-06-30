@@ -27,6 +27,9 @@
                         <h1 class="mt-4">Item Create</h1>
                         <br>
                         <div class="card mb-4">
+
+                            <div id="formErrors"></div>
+
                             <div class="card-body">
 
                                 <form action="/admin/item/create?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
@@ -83,5 +86,62 @@
         <script src="/admin/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="/admin/js/datatables-simple-demo.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+                const errorContainer = document.getElementById("formErrors");
+
+                form.addEventListener("submit", function (e) {
+                    const errors = [];
+
+                    const title = document.getElementById("title").value.trim();
+                    const preDescription = document.getElementById("preDescription").value.trim();
+                    const description = document.getElementById("editor").value.trim();
+                    const frontImage = document.getElementById("frontImage").files;
+                    const images = document.getElementById("Images").files;
+
+                    // Title
+                    if (!title) {
+                        errors.push("Başlık boş olamaz.");
+                    } else if (title.length > 255) {
+                        errors.push("Başlık 255 karakteri geçemez.");
+                    }
+
+                    // Ön açıklama
+                    if (preDescription.length > 255) {
+                        errors.push("Ön açıklama 255 karakteri geçemez.");
+                    }
+
+                    // Açıklama
+                    if (!description) {
+                        errors.push("Açıklama boş olamaz.");
+                    }
+
+                    // Ön resim
+                    if (frontImage.length === 0) {
+                        errors.push("Ön resim seçilmelidir.");
+                    }
+
+                    // Diğer resimler
+                    if (images.length > 25) {
+                        errors.push("En fazla 25 resim seçebilirsiniz.");
+                    }
+
+                    // Eğer hata varsa formu durdur ve göster
+                    if (errors.length > 0) {
+                        e.preventDefault();
+                        errorContainer.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Hata:</strong>
+                                <ul>${errors.map(err => `<li>${err}</li>`).join("")}</ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

@@ -29,6 +29,8 @@
                         <div class="card mb-4">
                             <div class="card-body">
 
+                                <!-- Bootstrap Alert Container -->
+                                <div id="formErrors"></div>
 
                                 <form action="/admin/settings?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
 
@@ -146,5 +148,83 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+
+                form.addEventListener("submit", function (e) {
+                    const errors = [];
+
+                    // Zorunlu ve uzunluk kontrolleri
+                    function checkRequired(id, label) {
+                        const val = document.getElementById(id)?.value.trim();
+                        if (!val) {
+                            errors.push(`${label} is required.`);
+                        } else if (val.length > 255) {
+                            errors.push(`${label} must be less than or equal to 255 characters.`);
+                        }
+                    }
+
+                    function checkOptionalUrl(id, label) {
+                        const val = document.getElementById(id)?.value.trim();
+                        if (val && !/^https?:\/\/[^\s]+$/.test(val)) {
+                            errors.push(`${label} must be a valid URL.`);
+                        }
+                    }
+
+                    // Brand Name, Email, Password: required
+                    checkRequired("brandName", "Brand Name");
+                    checkRequired("Email", "Email");
+                    checkRequired("mailAppPassword", "Email App Password");
+
+                    // Email format
+                    const email = document.getElementById("Email")?.value.trim();
+                    if (email && !/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                        errors.push("Email must be a valid email address.");
+                    }
+
+                    // Phone Number (optional, but must be 10-15 digits)
+                    const phone = document.getElementById("phoneNumber")?.value.trim();
+                    if (phone && !/^\d{10,15}$/.test(phone)) {
+                        errors.push("Phone number must be between 10 and 15 digits.");
+                    }
+
+                    // Optional URL fields
+                    checkOptionalUrl("location", "Location");
+                    checkOptionalUrl("instagram", "Instagram");
+                    checkOptionalUrl("twitter", "Twitter");
+                    checkOptionalUrl("facebook", "Facebook");
+                    checkOptionalUrl("youtube", "Youtube");
+
+                    // 255 karakter sınırı olan tüm alanlar (opsiyonel bile olsa)
+                    const limitedFields = [
+                        "location", "instagram", "twitter",
+                        "facebook", "youtube", "phoneNumber"
+                    ];
+                    limitedFields.forEach(id => {
+                        const val = document.getElementById(id)?.value.trim();
+                        if (val && val.length > 255) {
+                            errors.push(`${id} must be less than or equal to 255 characters.`);
+                        }
+                    });
+
+                    const errorContainer = document.getElementById("formErrors");
+                    errorContainer.innerHTML = "";
+
+                    if (errors.length > 0) {
+                        e.preventDefault();
+                        errorContainer.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Please fix the following errors:</strong>
+                                <ul>${errors.map(err => `<li>${err}</li>`).join("")}</ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

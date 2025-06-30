@@ -18,25 +18,25 @@
         <%- include('../../partials/admin/topbar') %>
 
         <div id="layoutSidenav">
-
             <%- include('../../partials/admin/sidebar', user) %>
-            
+
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Content</h1>
+
                         <div class="card mb-4">
-                            <div class="card-body">
-                                You can manage the contents from here.
-                            </div>
+                            <div class="card-body">You can manage the contents from here.</div>
                         </div>
 
                         <div class="card mb-4">
-                            <div class="card-body"> 
+                            <div class="card-body">
+                                <!-- Bootstrap Alert Container -->
+                                <div id="formErrors"></div>
+
                                 <form action="/admin/content?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
 
                                     <h2>Carousel</h2>
-
                                     <a href="content/carousel">Carousel Demo</a>
 
                                     <div class="form-group">
@@ -45,68 +45,64 @@
                                     </div><br>
 
                                     <div class="form-group">
-                                        <label >Background Image</label>
+                                        <label>Background Image</label>
                                         <input type="file" class="form-control" id="carouselImage" name="carouselImage">
-                                    </div><br> <br>
+                                    </div><br><br>
 
                                     <h2>About</h2>
-
                                     <a href="content/about">About Demo</a>
 
                                     <div class="form-group">
                                         <label>Title</label>
-                                        <input type="text" class="form-control" id="aboutTitle" Name="aboutTitle" value="<%= content.aboutTitle %>">
+                                        <input type="text" class="form-control" id="aboutTitle" name="aboutTitle" value="<%= content.aboutTitle %>">
                                     </div><br>
 
                                     <div class="form-group">
-                                        <label >Image</label>
+                                        <label>Image</label>
                                         <input type="file" class="form-control" id="aboutImage" name="aboutImage">
-                                    </div><br> 
+                                    </div><br>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <label>Description</label>
                                         <textarea class="form-control" id="aboutDescription" name="aboutDescription"><%= content.aboutDescription %></textarea>
                                     </div><br>
 
                                     <div class="form-group">
                                         <label>Slogan</label>
-                                        <input type="text" class="form-control" id="aboutSlogan" Name="aboutSlogan" value="<%= content.aboutSlogan %>">
+                                        <input type="text" class="form-control" id="aboutSlogan" name="aboutSlogan" value="<%= content.aboutSlogan %>">
                                     </div><br>
 
                                     <h2>Appoinment</h2>
-
                                     <a href="content/appoinment">Appoinment Demo</a>
 
                                     <div class="form-group">
                                         <label>Title</label>
-                                        <input type="text" class="form-control" id="appoinmentTitle" Name="appoinmentTitle" value="<%= content.appoinmentTitle %>">
+                                        <input type="text" class="form-control" id="appoinmentTitle" name="appoinmentTitle" value="<%= content.appoinmentTitle %>">
                                     </div><br>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <label>Description</label>
                                         <textarea class="form-control" id="appoinmentDescription" name="appoinmentDescription"><%= content.appoinmentDescription %></textarea>
                                     </div><br>
 
                                     <h2>Contact</h2>
-
                                     <a href="content/contact">Contact Demo</a>
 
                                     <div class="form-group">
                                         <label>Title</label>
-                                        <input type="text" class="form-control" id="contactTitle" Name="contactTitle" value="<%= content.contactTitle %>">
+                                        <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<%= content.contactTitle %>">
                                     </div><br>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <label>Description</label>
                                         <textarea class="form-control" id="contactDescription" name="contactDescription"><%= content.contactDescription %></textarea>
                                     </div><br>
 
                                     <h2>Newsletter</h2>
-
                                     <a href="content/newsletter">Newsletter Demo</a>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <label>Description</label>
                                         <textarea class="form-control" id="newsletterDescription" name="newsletterDescription"><%= content.newsletterDescription %></textarea>
                                     </div><br>
 
@@ -122,5 +118,50 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+        <!-- Form Validation Script -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+
+                form.addEventListener("submit", function (e) {
+                    const errors = [];
+
+                    const carouselTitle = document.getElementById("carouselTitle").value.trim();
+                    if (!carouselTitle) {
+                        errors.push("Carousel Title is required.");
+                    } else if (carouselTitle.length > 255) {
+                        errors.push("Carousel Title must be less than or equal to 255 characters.");
+                    }
+
+                    function checkMaxLength(id, label) {
+                        const val = document.getElementById(id)?.value.trim();
+                        if (val && val.length > 255) {
+                            errors.push(`${label} must be less than or equal to 255 characters.`);
+                        }
+                    }
+
+                    checkMaxLength("aboutTitle", "About Title");
+                    checkMaxLength("aboutSlogan", "About Slogan");
+                    checkMaxLength("appoinmentTitle", "Appoinment Title");
+                    checkMaxLength("contactTitle", "Contact Title");
+
+                    const errorContainer = document.getElementById("formErrors");
+                    errorContainer.innerHTML = "";
+
+                    if (errors.length > 0) {
+                        e.preventDefault();
+                        errorContainer.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Please fix the following errors:</strong>
+                                <ul>${errors.map(err => `<li>${err}</li>`).join("")}</ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
