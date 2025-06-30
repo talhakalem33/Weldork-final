@@ -12,7 +12,7 @@ const seq = require("./data/db");
 const csurf = require("csurf");
 const methodOverride = require("method-override");
 require("dotenv").config();
-//require("./startup/production")(app);
+require("./startup/production")(app);
 
 const sessionStore = new SequelizeStore({
   db: seq
