@@ -134,14 +134,20 @@ exports.itemsDetailGet = async function(req, res) {
     try {
         const settings = await Settings.findByPk(1);
         const id = decodeURIComponent(req.params.id);
+
         const item = await Item.findByPk(id);
 
-        // itemImage JSON string ise parse et
-        if (item && item.itemImage) {
+        // Eğer item bulunamazsa (id veritabanında yoksa), /items'e yönlendir
+        if (!item) {
+            return res.redirect("/items");
+        }
+
+        // itemImage varsa ve JSON ise parse etmeye çalış
+        if (item.itemImage) {
             try {
                 item.itemImage = JSON.parse(item.itemImage);
             } catch (e) {
-                item.itemImage = []; // parse edilemezse boş dizi ata
+                item.itemImage = []; // JSON parse hatasında boş dizi
             }
         } else {
             item.itemImage = [];
@@ -153,6 +159,8 @@ exports.itemsDetailGet = async function(req, res) {
         });
 
     } catch (err) {
-        console.log(err);
+        console.error("itemsDetailGet error:", err);
+        // Herhangi bir hata oluşursa güvenli şekilde yönlendir
+        res.redirect("/items");
     }
-}
+};
