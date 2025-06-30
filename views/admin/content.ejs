@@ -1,137 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Content</title>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <link href="/css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
-</head>
-<body class="sb-nav-fixed">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Content</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    </head>
+    <body class="sb-nav-fixed">
 
-    <%- include('../../partials/admin/topbar') %>
+        <%- include('../../partials/admin/topbar') %>
 
-    <div id="layoutSidenav">
-        <%- include('../../partials/admin/sidebar', user) %>
+        <div id="layoutSidenav">
 
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Content</h1>
-
-                    <% if (errorMessage) { %>
-                        <div class="alert alert-danger" role="alert">
-                            <%= errorMessage %>
+            <%- include('../../partials/admin/sidebar', user) %>
+            
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Content</h1>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                You can manage the contents from here.
+                            </div>
                         </div>
-                    <% } %>
 
-                    <% if (successMessage) { %>
-                        <div class="alert alert-success" role="alert">
-                            <%= successMessage %>
-                        </div>
-                    <% } %>
+                        <div class="card mb-4">
+                            <div class="card-body"> 
+                                <form action="/admin/content?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
 
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            You can manage the contents from here.
-                        </div>
-                    </div>
+                                    <h2>Carousel</h2>
 
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <form action="/admin/content?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
+                                    <a href="content/carousel">Carousel Demo</a>
 
-                                <h2>Carousel</h2>
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" id="carouselTitle" name="carouselTitle" value="<%= content.carouselTitle %>">
+                                    </div><br>
 
-                                <a href="content/carousel">Carousel Demo</a>
+                                    <div class="form-group">
+                                        <label >Background Image</label>
+                                        <input type="file" class="form-control" id="carouselImage" name="carouselImage">
+                                    </div><br> <br>
 
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" id="carouselTitle" name="carouselTitle" value="<%= content.carouselTitle %>">
-                                </div><br>
+                                    <h2>About</h2>
 
-                                <div class="form-group">
-                                    <label>Background Image</label>
-                                    <input type="file" class="form-control" id="carouselImage" name="carouselImage">
-                                </div><br><br>
+                                    <a href="content/about">About Demo</a>
 
-                                <h2>About</h2>
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" id="aboutTitle" Name="aboutTitle" value="<%= content.aboutTitle %>">
+                                    </div><br>
 
-                                <a href="content/about">About Demo</a>
+                                    <div class="form-group">
+                                        <label >Image</label>
+                                        <input type="file" class="form-control" id="aboutImage" name="aboutImage">
+                                    </div><br> 
 
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" id="aboutTitle" name="aboutTitle" value="<%= content.aboutTitle %>">
-                                </div><br>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea class="form-control" id="aboutDescription" name="aboutDescription"><%= content.aboutDescription %></textarea>
+                                    </div><br>
 
-                                <div class="form-group">
-                                    <label>Image</label>
-                                    <input type="file" class="form-control" id="aboutImage" name="aboutImage">
-                                </div><br>
+                                    <div class="form-group">
+                                        <label>Slogan</label>
+                                        <input type="text" class="form-control" id="aboutSlogan" Name="aboutSlogan" value="<%= content.aboutSlogan %>">
+                                    </div><br>
 
-                                <div class="form-group">
-                                    <label for="aboutDescription">Description</label>
-                                    <textarea class="form-control" id="aboutDescription" name="aboutDescription"><%= content.aboutDescription %></textarea>
-                                </div><br>
+                                    <h2>Appoinment</h2>
 
-                                <div class="form-group">
-                                    <label>Slogan</label>
-                                    <input type="text" class="form-control" id="aboutSlogan" name="aboutSlogan" value="<%= content.aboutSlogan %>">
-                                </div><br>
+                                    <a href="content/appoinment">Appoinment Demo</a>
 
-                                <h2>Appoinment</h2>
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" id="appoinmentTitle" Name="appoinmentTitle" value="<%= content.appoinmentTitle %>">
+                                    </div><br>
 
-                                <a href="content/appoinment">Appoinment Demo</a>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea class="form-control" id="appoinmentDescription" name="appoinmentDescription"><%= content.appoinmentDescription %></textarea>
+                                    </div><br>
 
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" id="appoinmentTitle" name="appoinmentTitle" value="<%= content.appoinmentTitle %>">
-                                </div><br>
+                                    <h2>Contact</h2>
 
-                                <div class="form-group">
-                                    <label for="appoinmentDescription">Description</label>
-                                    <textarea class="form-control" id="appoinmentDescription" name="appoinmentDescription"><%= content.appoinmentDescription %></textarea>
-                                </div><br>
+                                    <a href="content/contact">Contact Demo</a>
 
-                                <h2>Contact</h2>
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control" id="contactTitle" Name="contactTitle" value="<%= content.contactTitle %>">
+                                    </div><br>
 
-                                <a href="content/contact">Contact Demo</a>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea class="form-control" id="contactDescription" name="contactDescription"><%= content.contactDescription %></textarea>
+                                    </div><br>
 
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control" id="contactTitle" name="contactTitle" value="<%= content.contactTitle %>">
-                                </div><br>
+                                    <h2>Newsletter</h2>
 
-                                <div class="form-group">
-                                    <label for="contactDescription">Description</label>
-                                    <textarea class="form-control" id="contactDescription" name="contactDescription"><%= content.contactDescription %></textarea>
-                                </div><br>
+                                    <a href="content/newsletter">Newsletter Demo</a>
 
-                                <h2>Newsletter</h2>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea class="form-control" id="newsletterDescription" name="newsletterDescription"><%= content.newsletterDescription %></textarea>
+                                    </div><br>
 
-                                <a href="content/newsletter">Newsletter Demo</a>
-
-                                <div class="form-group">
-                                    <label for="newsletterDescription">Description</label>
-                                    <textarea class="form-control" id="newsletterDescription" name="newsletterDescription"><%= content.newsletterDescription %></textarea>
-                                </div><br>
-
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="/js/scripts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="/js/datatables-simple-demo.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
 </html>
