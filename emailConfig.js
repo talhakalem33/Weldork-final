@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Settings} = require("./models/index");
 
 const emailConfig = {
