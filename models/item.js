@@ -22,6 +22,14 @@ const Item = sequelize.define("Item", {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    isRent: {
+        type: DataTypes.TINYINT,
+        allowNull: true
+    },
+    isSale: {
+        type: DataTypes.TINYINT,
+        allowNull: true
+    }
 });
 
 module.exports = Item;

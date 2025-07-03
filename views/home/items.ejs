@@ -66,6 +66,14 @@
                             <img src="img/<%= item.itemFrontImage %>" class="card-img-top" >
                             <div class="card-body">
                                 <h5 class="card-title"><%= item.itemTitle %></h5>
+                                <div class="mb-2">
+                                    <% if (item.isRent) { %>
+                                        <span class="badge bg-warning text-dark me-1">Kiralık</span>
+                                    <% } %>
+                                    <% if (item.isSale) { %>
+                                        <span class="badge bg-success">Satılık</span>
+                                    <% } %>
+                                </div>
                                 <p class="card-text"><%= item.itemPredescription %></p>
                                 <a href="items/<%= item.id %>" class="btn btn-primary">Detaylar</a>
                             </div>
@@ -99,6 +107,28 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <style>
+        .card {
+            height: 100%;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+
 </body>
 
 </html>

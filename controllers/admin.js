@@ -684,9 +684,12 @@ exports.itemCreatePost = async function (req, res) {
     try {
         const user = await User.findOne({
             where: { id: req.session.userId },
-        });
+        }); 
 
-        const { title, preDescription, description } = req.body;
+        const { title, preDescription, description, isRent, isSale } = req.body;
+
+        const rentFlag = isRent ? 1 : 0;
+        const saleFlag = isSale ? 1 : 0;
 
         let frontImageName = null;
         if (req.files.frontImage && req.files.frontImage[0]) {
@@ -726,7 +729,9 @@ exports.itemCreatePost = async function (req, res) {
             itemPredescription: preDescription,
             itemDescription: description,
             itemFrontImage: frontImageName,
-            itemImage: JSON.stringify(imageNames) 
+            itemImage: JSON.stringify(imageNames),
+            isRent: rentFlag,
+            isSale: saleFlag
         });
 
         res.redirect("/admin/item");
@@ -767,6 +772,8 @@ exports.itemDetailPost = async function(req, res) {
         item.itemTitle = req.body.title;
         item.itemPredescription = req.body.preDescription;
         item.itemDescription = req.body.description;
+        item.isRent = req.body.isRent;
+        item.isSale = req.body.isSale;
 
         if (req.files.frontImage && req.files.frontImage[0]) {
             // Yeni frontImage var ise işle
