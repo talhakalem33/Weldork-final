@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {Settings, Content, Email, Appoinment, Item} = require("../models/index"); 
 
 exports.aboutGet = async function(req, res) {
@@ -115,14 +116,32 @@ exports.homeIndexPost = async function(req, res) {
 }
 
 exports.itemsGet = async function(req, res) {
- 
     try {
         const settings = await Settings.findByPk(1);
-        const items = await Item.findAll();
+        const filter = req.query.filter;
+        const search = req.query.search;
+
+        let whereClause = {};
+
+        // Arama
+        if (search) {
+            whereClause.itemTitle = { [Op.like]: `%${search}%` };
+        }
+
+        // Filtre
+        if (filter === "rent") {
+            whereClause.isRent = 1;
+        } else if (filter === "sale") {
+            whereClause.isSale = 1;
+        }
+
+        const items = await Item.findAll({ where: whereClause });
 
         res.render("home/items", {
-            settings: settings,
-            items: items
+            settings,
+            items,
+            filter,
+            search
         });
 
     } catch (err) {

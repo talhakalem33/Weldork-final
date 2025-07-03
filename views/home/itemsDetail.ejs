@@ -86,6 +86,19 @@
                 </div>
             </div><br><br>
 
+            <div class="row">
+                <div class="col-12 text-center">
+                    <% if (item.isRent) { %>
+                        <span class="badge bg-warning text-dark fs-5 py-2 px-3 rounded-pill me-2">Kiralık</span>
+                    <% } %>
+                    <% if (item.isSale) { %>
+                        <span class="badge bg-success fs-5 py-2 px-3 rounded-pill">Satılık</span>
+                    <% } %>
+                </div>
+            </div>
+
+            <br><br>
+
             <div class="row g-5 justify-content-center">
                 <div class="col-lg-9 wow fadeIn" data-wow-delay="0.1s">
                     <h5 style="color: #353839;"><%- item.itemDescription %></h5><br>
