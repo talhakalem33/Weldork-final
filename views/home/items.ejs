@@ -57,8 +57,6 @@
     <!-- Items Start -->
     <div class="container-fluid pt-6 pb-6">
         <div class="container pt-4">
-            <div class="row g-0 feature-row wow fadeIn bg-light" data-wow-delay="0.1s">
-
                 <form action="/items" method="get" class="row g-2 mb-4 justify-content-center">
                     <div class="col-md-3">
                         <input type="text" class="form-control" name="search" placeholder="Başlık ile ara..." value="<%= search || '' %>">
@@ -75,7 +73,6 @@
                     </div>
                 </form>
 
-
                 <% if (items.length === 0) { %>
                     <div class="text-center text-muted mt-4">
                         <i class="fa fa-circle-exclamation fa-2x mb-2 text-danger"></i>
@@ -83,31 +80,30 @@
                     </div>
                 <% } %>
 
-                <% items.forEach(item => { %>
-                 
-                    <div class="col-md-6 col-lg-3 wow fadeIn bg-light" data-wow-delay="0.3s">
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/<%= item.itemFrontImage %>" class="card-img-top" >
-                            <div class="card-body">
-                                <h5 class="card-title"><%= item.itemTitle %></h5>
-                                <div class="mb-2">
-                                    <% if (item.isRent) { %>
+                <div class="row g-4">
+                    <% items.forEach(item => { %>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card h-100">
+                                <a href="items/<%= item.id %>">
+                                    <img src="img/<%= item.itemFrontImage %>" class="card-img-top" alt="...">
+                                </a>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title"><%= item.itemTitle %></h5>
+                                    <div class="mb-2">
+                                        <% if (item.isRent) { %>
                                         <span class="badge bg-warning text-dark me-1">Kiralık</span>
-                                    <% } %>
-                                    <% if (item.isSale) { %>
+                                        <% } %>
+                                        <% if (item.isSale) { %>
                                         <span class="badge bg-success">Satılık</span>
-                                    <% } %>
+                                        <% } %>
+                                    </div>
+                                    <p class="card-text"><%= item.itemPredescription %></p>
+                                    <a href="items/<%= item.id %>" class="btn btn-outline-primary mt-auto">Detayları Gör</a>
                                 </div>
-                                <p class="card-text"><%= item.itemPredescription %></p>
-                                <a href="items/<%= item.id %>" class="btn btn-primary">Detaylar</a>
                             </div>
                         </div>
-                    </div>
-
-                <% }) %>
-
-
-            </div>
+                    <% }) %>
+                </div>
         </div>
     </div>
     <!-- Items End -->
@@ -138,11 +134,26 @@
             min-height: 420px;
             display: flex;
             flex-direction: column;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
         }
 
         .card-img-top {
             height: 180px;
             object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            transition: 0.3s ease;
+        }
+
+        .card:hover .card-img-top {
+            filter: brightness(80%);
         }
 
         .card-body {
@@ -150,6 +161,15 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+
+        .card-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            min-height: 70px;
         }
     </style>
 

@@ -30,6 +30,9 @@
 
     <!-- Template Stylesheet -->
     <link href="/css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -39,52 +42,56 @@
     <%- include('../../partials/navbar', settings) %>
 
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header pt-5 mb-6 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center pt-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-7">
-                    <div class="bg-white p-5">
-                        <h1 class="display-6 text-uppercase mb-3 animated slideInDown"><%= item.itemTitle %></h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Page Header End -->
-
-
     <div class="container pt-6 pb-6">
         <div class="container">
             <div class="row g-5 justify-content-center">
-                <div class="col-lg-9 wow fadeIn" data-wow-delay="0.1s">
-                    <div id="carouselExampleControls" class="carousel slide mx-auto" data-bs-ride="carousel">
-                        <div class="carousel-inner">
 
-                            <div class="carousel-item active">
-                                <img class="d-block w-100" src="/img/<%= item.itemFrontImage %>">
+                <h1 class="display-6 text-uppercase mb-3 animated slideInDown"><%= item.itemTitle %></h1>
+
+                <!-- Swiper Main Container -->
+                <div class="container">
+                    <!-- Main Swiper -->
+                    <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mainSwiper mb-3">
+                        <div class="swiper-wrapper">
+                            <!-- Front Image -->
+                            <div class="swiper-slide">
+                            <a href="/img/<%= item.itemFrontImage %>" data-lightbox="item-gallery">
+                                <img src="/img/<%= item.itemFrontImage %>" class="img-fluid" />
+                            </a>
+                            </div>
+
+                            <% if (item.itemImage && item.itemImage.length > 0) { %>
+                            <% item.itemImage.forEach(img => { %>
+                                <div class="swiper-slide">
+                                <a href="/img/<%= img %>" data-lightbox="item-gallery">
+                                    <img src="/img/<%= img %>" class="img-fluid" />
+                                </a>
+                                </div>
+                            <% }) %>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Thumbnail Swiper -->
+                    <div class="swiper thumbSwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="/img/<%= item.itemFrontImage %>" class="img-fluid" />
                             </div>
 
                             <% if (item.itemImage && item.itemImage.length > 0) { %>
                                 <% item.itemImage.forEach(img => { %>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="/img/<%= img %>">
-                                    </div>
+                                <div class="swiper-slide">
+                                    <img src="/img/<%= img %>" class="img-fluid" />
+                                </div>
                                 <% }) %>
-                            <% } %>    
-
+                            <% } %>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
                 </div>
-            </div><br><br>
+
+            </div><br>
+
 
             <div class="row">
                 <div class="col-12 text-center">
@@ -127,9 +134,54 @@
     <script src="/lib/waypoints/waypoints.min.js"></script>
     <script src="/lib/counterup/counterup.min.js"></script>
     <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <style>
+        .thumbSwiper .swiper-slide {
+            opacity: 0.4;
+            cursor: pointer;
+        }
+
+        .thumbSwiper .swiper-slide-thumb-active {
+            opacity: 1;
+            border: 2px solid #007bff;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+    </style>
+
+    <script>
+        var thumbSwiper = new Swiper(".thumbSwiper", {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+            breakpoints: {
+            768: {
+                slidesPerView: 6,
+            },
+            },
+        });
+
+        var mainSwiper = new Swiper(".mainSwiper", {
+            spaceBetween: 10,
+            navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+            swiper: thumbSwiper,
+            },
+        });
+    </script>
 </body>
 
 </html>
