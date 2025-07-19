@@ -27,6 +27,8 @@ router.get("/sitemap.xml", async (req, res) => {
 
     const allLinks = [...staticLinks, ...dynamicLinks];
 
+    console.log("Sitemap hostname:", config.website.hostname);  // kontrol için
+
     const stream = new SitemapStream({ hostname: config.website.hostname });
 
     const xml = await streamToPromise(Readable.from(allLinks).pipe(stream)).then((data) =>

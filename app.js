@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -11,7 +12,6 @@ var SequelizeStore = require("connect-session-sequelize")(session.Store);
 const seq = require("./data/db");
 const csurf = require("csurf");
 const methodOverride = require("method-override");
-require("dotenv").config();
 require("./startup/production")(app);
 
 const sessionStore = new SequelizeStore({
@@ -46,5 +46,5 @@ app.use(homeRoutes);
 let PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function() {
-    console.log('port ${PORT}');
+    console.log(`port ${process.env.PORT}`);
 });

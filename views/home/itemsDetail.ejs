@@ -33,6 +33,108 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css" rel="stylesheet">
+
+    <style>
+        .item-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .badge {
+            font-size: 1rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+        }
+
+        .custom-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+            margin: 0.25rem;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .custom-badge.rent {
+            background: linear-gradient(135deg, #fbb034, #ffdd00); /* Sarı gradient */
+            color: #333;
+        }
+
+        .custom-badge.sale {
+            background: linear-gradient(135deg, #28a745, #218838); /* Yeşil gradient */
+        }
+
+        .custom-badge i {
+            font-size: 1rem;
+        }
+
+        .description-box {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        .description-box h5 {
+            color: #444;
+            font-weight: 400;
+        }
+
+        .description-box a {
+            font-weight: 600;
+        }
+
+        .mainSwiper {
+            max-height: 400px;
+            margin-bottom: 1rem;
+        }
+
+        .mainSwiper .swiper-slide img {
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .thumbSwiper {
+            max-height: 100px;
+            margin-top: 0.5rem;
+        }
+
+        .thumbSwiper .swiper-slide img {
+            max-height: 100px;
+            object-fit: contain;
+        }
+
+        .thumbSwiper .swiper-slide {
+            opacity: 0.4;
+            cursor: pointer;
+        }
+
+        .thumbSwiper .swiper-slide-thumb-active {
+            opacity: 1;
+            border: 2px solid #007bff;
+        }
+        .mainSwiper .swiper-slide,
+        .thumbSwiper .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,79 +144,79 @@
     <%- include('../../partials/navbar', settings) %>
 
 
-    <div class="container pt-6 pb-6">
-        <div class="container">
-            <div class="row g-5 justify-content-center">
+    <section class="container py-5">
+        <div class="row justify-content-center mb-4">
+            <div class="col-12">
+                <h1 class="item-title animated slideInDown"><%= item.itemTitle %></h1>
+            </div>
 
-                <h1 class="display-6 text-uppercase mb-3 animated slideInDown"><%= item.itemTitle %></h1>
-
-                <!-- Swiper Main Container -->
-                <div class="container">
-                    <!-- Main Swiper -->
-                    <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mainSwiper mb-3">
-                        <div class="swiper-wrapper">
-                            <!-- Front Image -->
-                            <div class="swiper-slide">
+            <!-- Swiper Images (Main & Thumbnail) -->
+            <div class="col-12">
+                <div class="swiper mainSwiper mb-3">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
                             <a href="/img/<%= item.itemFrontImage %>" data-lightbox="item-gallery">
                                 <img src="/img/<%= item.itemFrontImage %>" class="img-fluid" />
                             </a>
-                            </div>
-
-                            <% if (item.itemImage && item.itemImage.length > 0) { %>
+                        </div>
+                        <% if (item.itemImage && item.itemImage.length > 0) { %>
                             <% item.itemImage.forEach(img => { %>
                                 <div class="swiper-slide">
-                                <a href="/img/<%= img %>" data-lightbox="item-gallery">
-                                    <img src="/img/<%= img %>" class="img-fluid" />
-                                </a>
+                                    <a href="/img/<%= img %>" data-lightbox="item-gallery">
+                                        <img src="/img/<%= img %>" class="img-fluid" />
+                                    </a>
                                 </div>
                             <% }) %>
-                            <% } %>
-                        </div>
+                        <% } %>
                     </div>
+                </div>
 
-                    <!-- Thumbnail Swiper -->
-                    <div class="swiper thumbSwiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="/img/<%= item.itemFrontImage %>" class="img-fluid" />
-                            </div>
-
-                            <% if (item.itemImage && item.itemImage.length > 0) { %>
-                                <% item.itemImage.forEach(img => { %>
+                <div class="swiper thumbSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="/img/<%= item.itemFrontImage %>" class="img-fluid" />
+                        </div>
+                        <% if (item.itemImage && item.itemImage.length > 0) { %>
+                            <% item.itemImage.forEach(img => { %>
                                 <div class="swiper-slide">
                                     <img src="/img/<%= img %>" class="img-fluid" />
                                 </div>
-                                <% }) %>
-                            <% } %>
-                        </div>
+                            <% }) %>
+                        <% } %>
                     </div>
                 </div>
+            </div>
+        </div>
 
-            </div><br>
+        <!-- Item Type -->
+        <div class="row justify-content-center mb-4">
+            <% if (item.isRent) { %>
+                <div class="col-auto">
+                    <span class="custom-badge rent">
+                        <i class="fas fa-key me-2"></i> Kiralık
+                    </span>
+                </div>
+            <% } %>
+            <% if (item.isSale) { %>
+                <div class="col-auto">
+                    <span class="custom-badge sale">
+                        <i class="fas fa-tag me-2"></i> Satılık
+                    </span>
+                </div>
+            <% } %>
+        </div>
 
-
-            <div class="row">
-                <div class="col-12 text-center">
-                    <% if (item.isRent) { %>
-                        <span class="badge bg-warning text-dark fs-5 py-2 px-3 rounded-pill me-2">Kiralık</span>
-                    <% } %>
-                    <% if (item.isSale) { %>
-                        <span class="badge bg-success fs-5 py-2 px-3 rounded-pill">Satılık</span>
-                    <% } %>
+        <!-- Description -->
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="description-box wow fadeIn" data-wow-delay="0.1s">
+                    <h5><%- item.itemDescription %></h5>
+                    <hr>
+                    <h4><a href="/contact" class="text-decoration-none text-primary">Daha fazla bilgi için bizimle iletişime geçin</a></h4>
                 </div>
             </div>
-
-            <br><br>
-
-            <div class="row g-5 justify-content-center">
-                <div class="col-lg-9 wow fadeIn" data-wow-delay="0.1s">
-                    <h5 style="color: #353839;"><%- item.itemDescription %></h5><br>
-                    <h4><a href="/contact">Daha fazla bilgi için</a></h4>
-                </div>
-            </div>
-
-        </div>      
-    </div>
+        </div>
+    </section>
 
 
 
@@ -139,24 +241,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <style>
-        .thumbSwiper .swiper-slide {
-            opacity: 0.4;
-            cursor: pointer;
-        }
-
-        .thumbSwiper .swiper-slide-thumb-active {
-            opacity: 1;
-            border: 2px solid #007bff;
-        }
-
-        .swiper-slide img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-    </style>
 
     <script>
         var thumbSwiper = new Swiper(".thumbSwiper", {

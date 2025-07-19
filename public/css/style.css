@@ -161,6 +161,18 @@
 
 
 /*** Header ***/
+.carousel .carousel-item {
+    height: 600px; /* Uzatıldı */
+    overflow: hidden;
+}
+
+.carousel .carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 .carousel .carousel-caption {
     top: 0;
     left: 0;
@@ -173,7 +185,7 @@
     text-align: left;
     background: rgba(0, 0, 0, .7);
     padding: 3rem;
-    padding-left: 11rem;
+    padding-left: 6rem;
     z-index: 1;
 }
 
@@ -189,8 +201,8 @@
 }
 
 .carousel .carousel-indicators [data-bs-target] {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     text-indent: 0;
     margin: 5px 0;
     border: 2px solid #FFFFFF;
@@ -203,47 +215,39 @@
     object-fit: cover;
 }
 
+/* Responsive */
 @media (max-width: 992px) {
     .carousel .carousel-item {
-        position: relative;
-        min-height: 600px;
-    }
-    
-    .carousel .carousel-item img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .carousel .carousel-indicators [data-bs-target] {
-        width: 60px;
-        height: 60px;
+        height: 500px;
     }
 
     .carousel .carousel-caption {
-        padding-left: 10rem;
+        padding-left: 3rem;
     }
 }
 
 @media (max-width: 768px) {
     .carousel .carousel-item {
-        min-height: 500px;
+        height: 450px;
+    }
+
+    .carousel .carousel-caption {
+        padding-left: 2rem;
     }
 
     .carousel .carousel-indicators [data-bs-target] {
         width: 50px;
         height: 50px;
     }
-
-    .carousel .carousel-caption {
-        padding-left: 9rem;
-    }
 }
 
 @media (min-width: 1200px) {
-    .carousel .carousel-item .display-1 {
-        font-size: 7rem;
+    .carousel .carousel-item {
+        height: 600px;
+    }
+
+    .carousel .carousel-caption .display-1 {
+        font-size: 4.7rem;
     }
 }
 
@@ -281,6 +285,46 @@
     100% { 
         top: -25px;
     } 
+}
+
+.about-img-animated {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.about-shape {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-color: rgba(13, 110, 253, 0.2);
+    border-radius: 50%;
+    top: 10%;
+    left: 10%;
+    animation: floatShape 6s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes floatShape {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@media (max-width: 576px) {
+    .about-img-animated img {
+        width: 50% !important;
+        margin: 0 auto;
+        display: block;
+        border-radius: 1rem !important;
+    }
+
+    .about-shape {
+        width: 60px;
+        height: 60px;
+        top: 5%;
+        left: 5%;
+    }
 }
 
 
@@ -392,6 +436,17 @@
 .appoinment {
     background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/onecolor.png) left center no-repeat;
     background-size: cover;
+}
+
+#appointment input,
+#appointment textarea {
+    font-size: 1rem;
+    box-shadow: none !important;
+}
+
+#appointment .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
 }
 
 
@@ -524,6 +579,42 @@
         top: 50%;
         left: 0;
         border-top: 1px dashed rgba(255, 255, 255, .2);
+    }
+}
+
+@media (max-width: 576px) {
+    .appoinment {
+        padding-bottom: 5rem !important;
+    }
+
+    .btn-lg-square {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.2rem !important;
+    }
+
+    .display-6 {
+        font-size: 1.8rem !important;
+    }
+
+    .text-uppercase {
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .appoinment {
+        padding-bottom: 5rem !important;
+    }
+
+    .btn-lg-square {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+
+    .text-uppercase {
+        font-size: 1rem;
     }
 }
 

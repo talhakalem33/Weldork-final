@@ -38,35 +38,19 @@
     <%- include('../../partials/topbar', settings) %>
     <%- include('../../partials/navbar', settings) %>
 
-
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header pt-5 mb-6 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center pt-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-7">
-                    <div class="bg-white p-5">
-                        <h1 class="display-6 text-uppercase mb-3 animated slideInDown">Contact</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Page Header End -->
-
-
     <!-- Contact Start -->
-    <div class="pt-6 pb-6">
-        <div class="container-fluid appoinment py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="py-3">
+        <!-- Yukarıdan boşluk -->
+        <div class="container-fluid appoinment py-5 pb-7 mt-5 wow fadeIn" data-wow-delay="0.1s" style="min-height: 500px;">
             <div class="container pt-5">
                 <div class="row gy-5 gx-0">
                     <div class="col-lg-6 pe-lg-5 wow fadeIn" data-wow-delay="0.3s">
-                        <h1 class="display-6 text-uppercase text-white mb-4"><%= content.contactTitle %>
-                        </h1>
+                        <h1 class="display-6 text-uppercase text-white mb-4"><%= content.contactTitle %></h1>
                         <p class="text-white mb-5 wow fadeIn" data-wow-delay="0.4s"><%= content.contactDescription %></p>
 
                         <% if (settings.Email && settings.Email.trim() !== '') { %>
                         <div class="d-flex align-items-start wow fadeIn" data-wow-delay="0.5s">
-                            <div class="btn-lg-square bg-white">
+                            <div class="btn-lg-square bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                                 <i class="bi bi-envelope-at text-dark fs-3"></i>
                             </div>
                             <div class="ms-3">
@@ -79,7 +63,7 @@
                         <% if (settings.phoneNumber && settings.phoneNumber.toString().trim() !== '') { %>
                         <hr class="bg-body">
                         <div class="d-flex align-items-start wow fadeIn" data-wow-delay="0.6s">
-                            <div class="btn-lg-square bg-white">
+                            <div class="btn-lg-square bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
                                 <i class="bi bi-telephone text-dark fs-3"></i>
                             </div>
                             <div class="ms-3">
@@ -91,12 +75,22 @@
 
                         <% if (settings.location && settings.location.trim() !== '') { %>
                         <hr class="bg-body">
-                        <div class="d-flex align-items-start wow fadeIn" data-wow-delay="0.6s">
-                            <div class="btn-lg-square bg-white">
-                                <a href="<%= settings.location %>"><i class="fas fa-map-marker-alt text-dark fs-3"></i></a>
+                        <div class="d-flex justify-content-center wow fadeIn" data-wow-delay="0.6s">
+                            <div class="btn-lg-square bg-white rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 60px; height: 60px;">
+                                <a href="<%= settings.location %>" target="_blank">
+                                    <i class="fas fa-map-marker-alt text-dark fs-3"></i>
+                                </a>
                             </div>
                         </div>
                         <% } %>
+                    </div>
+                    <!-- Harita -->
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.4s">
+                        <div class="position-relative w-100 h-100" style="min-height: 400px;">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8659.21830401502!2d32.818195132631864!3d39.88552617867031!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345f0a9aacc8d%3A0xec882979747ef3b8!2sYILDIRIM%20KULE!5e0!3m2!1str!2str!4v1752757446234!5m2!1str!2str" 
+                            class="position-absolute top-0 start-0 w-100 h-100 border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
